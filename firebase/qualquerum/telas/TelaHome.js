@@ -30,6 +30,9 @@ export default function TelaHome({ navigation }) {
           <TouchableOpacity style={[estilos.button, {marginTop: 10}]} onPress={()=> navigation.navigate('Perfil')}>
             <Text style={estilos.buttonText}>Perfil</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={[estilos.button, {marginTop: 10}]} onPress={()=> navigation.navigate('Admin')}>
+            <Text style={estilos.buttonText}>Admin</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

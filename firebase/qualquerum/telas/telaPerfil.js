@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {
+  SafeAreaView,
+  ScrollView,
   View,
   Text,
   TextInput,
-  Button,
+  TouchableOpacity,
   StyleSheet,
-  ScrollView,
   ActivityIndicator,
   Alert,
 } from 'react-native';
@@ -175,124 +176,244 @@ export default function TelaPerfil() {
 
   if (carregando) {
     return (
-      <View style={estilos.centralizado}>
-        <ActivityIndicator size="large" />
-      </View>
+      <SafeAreaView style={estilos.safe}>
+        <View style={estilos.centralizado}>
+          <ActivityIndicator size="large" color="#4f46e5" />
+        </View>
+      </SafeAreaView>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={estilos.container}>
-      <Text style={estilos.titulo}>Perfil do Usuário</Text>
+    <SafeAreaView style={estilos.safe}>
+      <ScrollView contentContainerStyle={estilos.container} keyboardShouldPersistTaps="handled">
+        <View style={estilos.card}>
+          <View style={estilos.headerPerfil}>
+            <View style={estilos.avatar}>
+              <Text style={estilos.avatarText}>
+                {perfil.nome?.charAt(0)?.toUpperCase() || 'U'}
+              </Text>
+            </View>
+            <View style={estilos.headerTexts}>
+              <Text style={estilos.titulo}>Perfil do Usuário</Text>
+              <Text style={estilos.subtituloPerfil}>Atualize seus dados para manter o perfil completo.</Text>
+            </View>
+          </View>
 
-      <Text>Nome</Text>
-      <TextInput
-        style={estilos.input}
-        value={perfil.nome}
-        onChangeText={(valor) => atualizarCampo('nome', valor)}
-        editable={editando}
-      />
+          <View style={estilos.campoBloco}>
+            <Text style={estilos.label}>Nome</Text>
+            <TextInput
+              style={estilos.input}
+              value={perfil.nome}
+              onChangeText={(valor) => atualizarCampo('nome', valor)}
+              editable={editando}
+            />
+          </View>
 
-      <Text>Sobrenome</Text>
-      <TextInput
-        style={estilos.input}
-        value={perfil.sobrenome}
-        onChangeText={(valor) => atualizarCampo('sobrenome', valor)}
-        editable={editando}
-      />
+          <View style={estilos.campoBloco}>
+            <Text style={estilos.label}>Sobrenome</Text>
+            <TextInput
+              style={estilos.input}
+              value={perfil.sobrenome}
+              onChangeText={(valor) => atualizarCampo('sobrenome', valor)}
+              editable={editando}
+            />
+          </View>
 
-      <Text>Rua</Text>
-      <TextInput
-        style={estilos.input}
-        value={perfil.rua}
-        onChangeText={(valor) => atualizarCampo('rua', valor)}
-        editable={editando}
-      />
+          <View style={estilos.campoBloco}>
+            <Text style={estilos.label}>Rua</Text>
+            <TextInput
+              style={estilos.input}
+              value={perfil.rua}
+              onChangeText={(valor) => atualizarCampo('rua', valor)}
+              editable={editando}
+            />
+          </View>
 
-      <Text>Bairro</Text>
-      <TextInput
-        style={estilos.input}
-        value={perfil.bairro}
-        onChangeText={(valor) => atualizarCampo('bairro', valor)}
-        editable={editando}
-      />
+          <View style={estilos.campoBloco}>
+            <Text style={estilos.label}>Bairro</Text>
+            <TextInput
+              style={estilos.input}
+              value={perfil.bairro}
+              onChangeText={(valor) => atualizarCampo('bairro', valor)}
+              editable={editando}
+            />
+          </View>
 
-      <Text>Cidade</Text>
-      <TextInput
-        style={estilos.input}
-        value={perfil.cidade}
-        onChangeText={(valor) => atualizarCampo('cidade', valor)}
-        editable={editando}
-      />
+          <View style={estilos.campoBloco}>
+            <Text style={estilos.label}>Cidade</Text>
+            <TextInput
+              style={estilos.input}
+              value={perfil.cidade}
+              onChangeText={(valor) => atualizarCampo('cidade', valor)}
+              editable={editando}
+            />
+          </View>
 
-      <Text>Estado</Text>
-      <TextInput
-        style={estilos.input}
-        value={perfil.estado}
-        onChangeText={(valor) => atualizarCampo('estado', valor)}
-        editable={editando}
-      />
+          <View style={estilos.campoBloco}>
+            <Text style={estilos.label}>Estado</Text>
+            <TextInput
+              style={estilos.input}
+              value={perfil.estado}
+              onChangeText={(valor) => atualizarCampo('estado', valor)}
+              editable={editando}
+            />
+          </View>
 
-      <Text>CEP</Text>
-      <TextInput
-        style={estilos.input}
-        value={perfil.cep}
-        onChangeText={(valor) => atualizarCampo('cep', valor)}
-        editable={editando}
-        keyboardType="numeric"
-      />
+          <View style={estilos.campoBloco}>
+            <Text style={estilos.label}>CEP</Text>
+            <TextInput
+              style={estilos.input}
+              value={perfil.cep}
+              onChangeText={(valor) => atualizarCampo('cep', valor)}
+              editable={editando}
+              keyboardType="numeric"
+            />
+          </View>
 
-      <Text>Telefone celular</Text>
-      <TextInput
-        style={estilos.input}
-        value={perfil.telefone}
-        onChangeText={(valor) => atualizarCampo('telefone', valor)}
-        editable={editando}
-        keyboardType="phone-pad"
-      />
+          <View style={estilos.campoBloco}>
+            <Text style={estilos.label}>Telefone celular</Text>
+            <TextInput
+              style={estilos.input}
+              value={perfil.telefone}
+              onChangeText={(valor) => atualizarCampo('telefone', valor)}
+              editable={editando}
+              keyboardType="phone-pad"
+            />
+          </View>
 
-      {editando ? (
-        <>
-          <Button
-            title={salvando ? 'Salvando...' : 'Salvar Perfil'}
-            onPress={salvarPerfil}
-            disabled={salvando}
-          />
+          <View style={estilos.botoesContainer}>
+        {editando ? (
+          <>
+            <TouchableOpacity
+              style={[estilos.botaoPrincipal, salvando && estilos.botaoDesativado]}
+              onPress={salvarPerfil}
+              disabled={salvando}
+            >
+              <Text style={estilos.botaoTexto}>
+                {salvando ? 'Salvando...' : 'Salvar Perfil'}
+              </Text>
+            </TouchableOpacity>
 
-          <View style={estilos.espaco} />
-
-          <Button title="Cancelar" onPress={() => setEditando(false)} />
-        </>
-      ) : (
-        <Button title="Editar Perfil" onPress={() => setEditando(true)} />
-      )}
-    </ScrollView>
-  );
+            <TouchableOpacity style={estilos.botaoSecundario} onPress={() => setEditando(false)}>
+              <Text style={estilos.botaoSecundarioTexto}>Cancelar</Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <TouchableOpacity style={estilos.botaoPrincipal} onPress={() => setEditando(true)}>
+            <Text style={estilos.botaoTexto}>Editar Perfil</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </View>
+  </ScrollView>
+</SafeAreaView>
+);
 }
 
 const estilos = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: '#f2f5f8',
+  },
   container: {
+    padding: 16,
+    paddingBottom: 30,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 18,
     padding: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  headerPerfil: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  avatar: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: '#4f46e5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 14,
+  },
+  avatarText: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  headerTexts: {
+    flex: 1,
   },
   titulo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#111827',
+    marginBottom: 6,
+  },
+  subtituloPerfil: {
+    color: '#6b7280',
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  campoBloco: {
+    marginBottom: 14,
+  },
+  label: {
+    color: '#4b5563',
+    fontSize: 13,
+    marginBottom: 6,
+    fontWeight: '600',
   },
   input: {
+    backgroundColor: '#f8fafc',
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    marginBottom: 12,
-    padding: 10,
+    borderColor: '#e5e7eb',
+    borderRadius: 12,
+    padding: 14,
+    fontSize: 15,
+    color: '#111827',
+  },
+  botoesContainer: {
+    marginTop: 16,
+  },
+  botaoPrincipal: {
+    backgroundColor: '#4f46e5',
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  botaoTexto: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 15,
+  },
+  botaoSecundario: {
+    marginTop: 12,
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+    backgroundColor: '#fff',
+  },
+  botaoSecundarioTexto: {
+    color: '#374151',
+    fontWeight: '700',
+    fontSize: 15,
   },
   centralizado: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  espaco: {
-    height: 10,
+  botaoDesativado: {
+    opacity: 0.65,
   },
 });
