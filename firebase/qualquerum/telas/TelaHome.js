@@ -9,7 +9,7 @@ import {
 import { signOut } from 'firebase/auth';
 import { autenticacao } from '../config/firebaseConfig';
 
-export default function TelaHome() {
+export default function TelaHome({ navigation }) {
   const fazerLogout = () => {
     signOut(autenticacao);
   };
@@ -26,6 +26,9 @@ export default function TelaHome() {
           <Text style={estilos.title}>Bem-vindo, {nomeUsuario}!</Text>
           <TouchableOpacity style={estilos.button} onPress={fazerLogout}>
             <Text style={estilos.buttonText}>Sair</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[estilos.button, {marginTop: 10}]} onPress={()=> navigation.navigate('Perfil')}>
+            <Text style={estilos.buttonText}>Perfil</Text>
           </TouchableOpacity>
         </View>
       </View>
