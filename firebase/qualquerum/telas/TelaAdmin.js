@@ -28,7 +28,7 @@ Foto3: '',
 ValorNormal: '',
 ValorDesconto: '',
 Desconto: '',
-};export default function TelaAdm() {
+};export default function TelaAdm({ navigation }) {
 const [produtos, setProdutos] = useState([]);
 const [carregando, setCarregando] = useState(true);
 const [salvando, setSalvando] = useState(false);
@@ -230,13 +230,12 @@ descontoTexto = `${perc}%`;
 }
 }return (
 <View style={estilos.card}>
-<Image source={{ uri: item.Foto }} style={estilos.imagemProduto} resizeMode="cover" />{/* Botão de excluir no topo esquerdo */}
 <TouchableOpacity
-style={estilos.botaoDeletar}
-onPress={() => deletarProduto(item.id, item.Produto)}
+style={estilos.cardPressArea}
+activeOpacity={0.85}
+onPress={() => navigation.navigate('Detalhes', { produto: item })}
 >
-<Text style={estilos.textoBotaoDeletar}>🗑️</Text>
-</TouchableOpacity>{/* Badge de desconto no topo direito */}
+<Image source={{ uri: item.Foto }} style={estilos.imagemProduto} resizeMode="cover" />
 {descontoTexto ? (
 <View style={estilos.badgeDesconto}>
 <Text style={estilos.textoBadgeDesconto}>{descontoTexto} OFF</Text>
@@ -246,16 +245,28 @@ onPress={() => deletarProduto(item.id, item.Produto)}
 <Text numberOfLines={2} style={estilos.nomeProduto}>{item.Produto}</Text>
 {item.Descrição ? (
 <Text numberOfLines={1} style={estilos.descricaoProduto}>{item.Descrição}</Text>
-) : null}<View style={estilos.precosContainer}>
+) : null}
+<View style={estilos.precosContainer}>
 {item.ValorNormal ? (
 <Text style={estilos.precoNormal}>{formatarMoeda(item.ValorNormal)}</Text>
 ) : null}
-<Text style={estilos.precoVenda}>{formatarMoeda(item.Preço)}</Text>{item.ValorDesconto ? (
+<Text style={estilos.precoVenda}>{formatarMoeda(item.Preço)}</Text>
+{item.ValorDesconto ? (
 <Text style={estilos.valorDescontoDescricao}>
 Economize {formatarMoeda(item.ValorDesconto)}
 </Text>
 ) : null}
-</View><TouchableOpacity style={estilos.botaoEditar} onPress={() => iniciarEdicao(item)}>
+</View>
+</View>
+</TouchableOpacity>
+<TouchableOpacity
+style={estilos.botaoDeletar}
+onPress={() => deletarProduto(item.id, item.Produto)}
+>
+<Text style={estilos.textoBotaoDeletar}>🗑️</Text>
+</TouchableOpacity>
+<View style={estilos.infoContainerBottom}>
+<TouchableOpacity style={estilos.botaoEditar} onPress={() => iniciarEdicao(item)}>
 <Text style={estilos.textoBotaoEditar}>✏️ Editar</Text>
 </TouchableOpacity>
 </View>
@@ -540,6 +551,9 @@ shadowOpacity: 0.08,
 shadowRadius: 8,
 position: 'relative',
 },
+cardPressArea: {
+flex: 1,
+},
 botaoDeletar: {
 position: 'absolute',
 top: 8,
@@ -581,6 +595,10 @@ infoContainer: {
 padding: 10,
 flex: 1,
 justifyContent: 'space-between',
+},
+infoContainerBottom: {
+paddingHorizontal: 10,
+paddingBottom: 12,
 },
 nomeProduto: {
 fontSize: 14,
